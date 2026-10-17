@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1612">
+  <meta name="description" content="Farallones Fitness Lab: biblioteca de ejercicios y creación de rutinas personalizadas.">
+  <title>Farallones Fitness Lab</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Farallones Fitness Lab, inicio">
+      <span class="brand-mark" aria-hidden="true">F</span>
+      <span><strong>FARALLONES</strong><small>FITNESS LAB</small></span>
+    </a>
+    <nav class="nav" aria-label="Navegación principal"><a href="#pacientes">Pacientes</a><a href="#ejercicios">Ejercicios</a><a href="#mi-rutina">Mi rutina</a></nav>
+    <a class="routine-pill" href="#mi-rutina"><span>Mi rutina</span><strong id="routineCount">0</strong></a>
+  </header>
+
+  <main id="inicio">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> Movimiento con propósito</p>
+        <h1>ENTRENA MEJOR.<br><em>MUÉVETE CON CONFIANZA.</em></h1>
+        <p>Explora ejercicios por zona corporal, conoce su función y arma una rutina con las series y repeticiones indicadas por la persona o su fisioterapeuta.</p>
+        <div class="hero-actions"><a class="primary-button" href="#ejercicios">Explorar ejercicios</a><a class="text-link" href="#mi-rutina">Ver mi rutina <span>↗</span></a></div>
+      </div>
+      <div class="hero-panel" aria-label="Pasos para usar la plataforma">
+        <p>ARMA TU SESIÓN</p>
+        <ol>
+          <li><span>01</span><div><strong>Elige una zona</strong><small>Filtra la biblioteca</small></div></li>
+          <li><span>02</span><div><strong>Añade ejercicios</strong><small>Revisa la técnica y beneficios</small></div></li>
+          <li><span>03</span><div><strong>Completa tu rutina</strong><small>Marca el progreso en tiempo real</small></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="patient-section" id="pacientes">
+      <div class="shell">
+        <div class="section-heading patient-heading">
+          <div><p class="section-index">01 / CONTROL DE PACIENTES</p><h2>REGISTRO Y <em>SEGUIMIENTO</em></h2><p>Guarda patologías, observaciones y controles de signos vitales para consultar la evolución de cada paciente.</p></div>
+          <button class="primary-button" id="openPatientForm" type="button">＋ Registrar paciente</button>
+        </div>
+        <div class="patient-notice"><span>i</span><p><strong>Información local y privada.</strong> Los datos se guardan únicamente en este navegador. Este registro apoya el seguimiento y no reemplaza la historia clínica ni la valoración de un profesional de salud.</p></div>
+        <div class="patient-tools">
+          <label class="patient-search"><span>⌕</span><input type="search" id="patientSearch" placeholder="Buscar por nombre o identificación" aria-label="Buscar pacientes"></label>
+          <div class="patient-stat"><strong id="patientCount">0</strong><span>pacientes registrados</span></div>
+        </div>
+        <div class="patient-empty" id="patientEmpty"><span>＋</span><h3>AÚN NO HAY PACIENTES</h3><p>Registra el primer paciente para comenzar su seguimiento.</p><button class="text-button" type="button" data-new-patient>Crear registro</button></div>
+        <div class="patient-grid" id="patientGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="library shell" id="ejercicios">
+      <div class="section-heading">
+        <div><p class="section-index">02 / BIBLIOTECA</p><h2>EJERCICIOS POR <em>ZONA CORPORAL</em></h2><p>Selecciona una categoría y abre la guía para conocer cómo se realiza y en qué ayuda.</p></div>
+        <div class="results-count"><strong id="totalCount">0</strong><span>ejercicios<br>disponibles</span></div>
+      </div>
+      <div class="category-wrap"><div class="categories" id="categories" role="tablist" aria-label="Zona corporal"></div></div>
+      <div class="category-title-row"><div><h3 id="categoryTitle">MIEMBRO INFERIOR</h3><p id="categoryDescription"></p></div><strong id="exerciseCount">0</strong></div>
+      <div class="exercise-grid" id="exerciseGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="routine-section" id="mi-rutina">
+      <div class="shell">
+        <div class="section-heading routine-heading">
+          <div><p class="section-index">03 / PLAN DE ENTRENAMIENTO</p><h2>MI RUTINA <em>PERSONALIZADA</em></h2><p>Configura series y repeticiones, y marca cada ejercicio cuando lo termines.</p></div>
+          <div class="progress-ring" id="progressRing" style="--progress:0"><strong id="progressPercent">0%</strong><span>completado</span></div>
+        </div>
+
+        <div class="warmup-card">
+          <div class="tip-icon">01</div>
+          <div><p class="tip-label">ANTES DE EMPEZAR · 6–10 MIN</p><h3>ACTIVA TU CUERPO</h3><p id="warmupText">Haz movilidad articular suave, eleva progresivamente el pulso y realiza una serie de aproximación sin peso o con carga ligera.</p></div>
+        </div>
+
+        <div class="routine-board">
+          <div class="routine-toolbar"><div><strong id="routineTitle">Tu sesión</strong><span id="routineSummary">Aún no hay ejercicios añadidos</span></div><button class="ghost-button" id="clearRoutine" type="button">Vaciar rutina</button></div>
+          <div class="routine-empty" id="routineEmpty"><span>＋</span><h3>Tu rutina está vacía</h3><p>Añade ejercicios desde la biblioteca. Podrás indicar las series y repeticiones que quieras.</p><a href="#ejercicios">Ir a la biblioteca</a></div>
+          <div class="routine-list" id="routineList"></div>
+        </div>
+
+        <div class="assignment-card">
+          <div><p class="tip-label">ASIGNACIÓN PROFESIONAL</p><h3>ASIGNAR ESTA RUTINA A UN PACIENTE</h3><p>El fisioterapeuta puede guardar una copia de la rutina, con sus series y repeticiones, dentro de la ficha del paciente.</p></div>
+          <div class="assignment-actions"><label><span>Paciente</span><select id="routinePatientSelect"><option value="">Seleccionar paciente</option></select></label><button class="primary-button" id="assignRoutine" type="button">Asignar rutina</button></div>
+        </div>
+
+        <div class="recovery-card" id="recoveryCard">
+          <div class="recovery-copy">
+            <p class="tip-label">AL TERMINAR · 5–8 MIN</p><h3>RECUPERA Y VUELVE A LA CALMA</h3>
+            <p id="recoveryText">Baja el ritmo gradualmente, respira de forma controlada y mantén cada estiramiento entre 20 y 30 segundos sin rebotes ni dolor.</p>
+            <div class="recovery-note"><strong>Recuerda:</strong> el estiramiento debe sentirse suave. Si aparece dolor, detente y consulta a tu fisioterapeuta.</div>
+          </div>
+          <div class="stretch-gallery" id="stretchGallery" aria-label="Estiramientos sugeridos"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <div><p class="eyebrow"><span></span> Bienestar · Movimiento · Comunidad</p><h2>FARALLONES <em>FITNESS LAB</em></h2><p>Herramienta de apoyo para organizar el entrenamiento. Las indicaciones de tu fisioterapeuta o profesional de salud siempre tienen prioridad.</p></div>
+      <div class="partner-logos" aria-label="Entidades aliadas">
+        <div><img src="assets/brands/maria-cano.png" alt="Fundación Universitaria María Cano"><span>Fundación Universitaria<br>María Cano</span></div>
+        <div><img src="assets/brands/club-farallones.png" alt="Club Campestre Farallones"><span>Club Campestre<br>Farallones</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom shell"><span>Farallones Fitness Lab</span><span>Entrenamiento consciente y guiado</span></div>
+  </footer>
+
+  <div class="modal patient-form-modal" id="patientFormModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="patientFormTitle">
+    <button class="modal-backdrop" data-close-patient-form aria-label="Cerrar"></button>
+    <article class="patient-dialog form-dialog">
+      <button class="close-button" data-close-patient-form aria-label="Cerrar formulario">×</button>
+      <div class="patient-modal-head"><p class="guide-zone">Control de pacientes</p><h2 id="patientFormTitle">REGISTRAR PACIENTE</h2><p>Completa la información disponible. Los campos marcados con * son obligatorios.</p></div>
+      <form id="patientForm">
+        <input type="hidden" id="patientId" name="patientId">
+        <fieldset><legend>Datos básicos</legend><div class="form-grid">
+          <label class="span-2"><span>Nombre completo *</span><input type="text" name="name" required autocomplete="name" placeholder="Nombre y apellidos"></label>
+          <label><span>Identificación o código</span><input type="text" name="document" placeholder="Documento / código interno"></label>
+          <label><span>Fecha de nacimiento</span><input type="date" name="birthDate"></label>
+          <label class="span-2"><span>Profesional responsable</span><input type="text" name="professional" placeholder="Fisioterapeuta o entrenador responsable"></label>
+          <label><span>Nivel actual</span><select name="activityLevel"><option value="inicial">Inicial o sedentario</option><option value="intermedio">Intermedio</option><option value="avanzado">Avanzado</option></select></label>
+          <label><span>Objetivo principal</span><select name="trainingGoal"><option value="movilidad">Movilidad y recuperación</option><option value="acondicionamiento">Acondicionamiento general</option><option value="fuerza">Fortalecimiento</option><option value="resistencia">Resistencia física</option></select></label>
+        </div></fieldset>
+        <fieldset><legend>Antecedentes y condiciones</legend><div class="form-grid">
+          <label class="span-2"><span>Patologías o diagnósticos *</span><textarea name="pathologies" rows="3" required placeholder="Ej.: hipertensión, diabetes, lesión de rodilla..."></textarea></label>
+          <label class="span-2"><span>Restricciones, alertas u observaciones</span><textarea name="precautions" rows="3" placeholder="Cirugías, medicamentos, contraindicaciones o recomendaciones profesionales"></textarea></label>
+        </div></fieldset>
+        <fieldset><legend>Primer control de signos vitales</legend><p class="field-help">Registra los valores disponibles. Podrás añadir nuevos controles después.</p><div class="vitals-grid">
+          <label class="wide"><span>Fecha y hora</span><input type="datetime-local" name="controlDate" id="initialControlDate"></label>
+          <label><span>Presión sistólica</span><div class="unit-input"><input type="number" name="systolic" min="40" max="300" inputmode="numeric"><small>mmHg</small></div></label>
+          <label><span>Presión diastólica</span><div class="unit-input"><input type="number" name="diastolic" min="20" max="200" inputmode="numeric"><small>mmHg</small></div></label>
+          <label><span>Frecuencia cardiaca</span><div class="unit-input"><input type="number" name="heartRate" min="20" max="250" inputmode="numeric"><small>lpm</small></div></label>
+          <label><span>Saturación de oxígeno</span><div class="unit-input"><input type="number" name="spo2" min="50" max="100" inputmode="numeric"><small>%</small></div></label>
+          <label><span>Frecuencia respiratoria</span><div class="unit-input"><input type="number" name="respiratoryRate" min="5" max="80" inputmode="numeric"><small>rpm</small></div></label>
+          <label><span>Temperatura</span><div class="unit-input"><input type="number" name="temperature" min="30" max="45" step="0.1" inputmode="decimal"><small>°C</small></div></label>
+          <label><span>Peso</span><div class="unit-input"><input type="number" name="weight" min="10" max="400" step="0.1" inputmode="decimal"><small>kg</small></div></label>
+          <label><span>Dolor percibido</span><div class="unit-input"><input type="number" name="pain" min="0" max="10" inputmode="numeric"><small>/10</small></div></label>
+          <label class="wide"><span>Observación del control</span><input type="text" name="controlNotes" placeholder="Estado general o comentario breve"></label>
+        </div></fieldset>
+        <div class="form-actions"><button type="button" class="ghost-button" data-close-patient-form>Cancelar</button><button type="submit" class="primary-button" id="savePatientButton">Guardar paciente</button></div>
+      </form>
+    </article>
+  </div>
+
+  <div class="modal patient-record-modal" id="patientRecordModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="recordPatientName">
+    <button class="modal-backdrop" data-close-patient-record aria-label="Cerrar"></button>
+    <article class="patient-dialog record-dialog">
+      <button class="close-button" data-close-patient-record aria-label="Cerrar seguimiento">×</button>
+      <div class="record-head"><div><p class="guide-zone">Ficha de seguimiento</p><h2 id="recordPatientName"></h2><p id="recordPatientMeta"></p></div><button class="ghost-button" id="editPatient" type="button">Editar datos</button></div>
+      <div class="record-summary"><section><span>Patologías / diagnósticos</span><p id="recordPathologies"></p></section><section><span>Restricciones y observaciones</span><p id="recordPrecautions"></p></section></div>
+      <section class="assessment-card" id="patientAssessment"><div class="assessment-head"><span id="assessmentIndicator"></span><div><p class="guide-zone">Valoración orientativa del último control</p><h3 id="assessmentStatus"></h3></div></div><p id="assessmentSummary"></p><ul id="assessmentDetails"></ul><small>Interpretación de referencia para adultos en reposo. No establece diagnósticos ni reemplaza la valoración clínica. Considera las patologías, los síntomas y los objetivos individuales del paciente.</small><div class="assessment-sources">Referencias: <a href="https://www.medlineplus.gov/ency/article/002341.htm" target="_blank" rel="noopener">MedlinePlus: signos vitales</a> · <a href="https://professional.heart.org/en/science-news/2025-high-blood-pressure-guideline/top-things-to-know" target="_blank" rel="noopener">AHA: presión arterial</a> · <a href="https://medlineplus.gov/lab-tests/pulse-oximetry/" target="_blank" rel="noopener">MedlinePlus: oximetría</a></div></section>
+      <section class="estimated-routine" id="estimatedRoutine"><div class="estimated-head"><div><p class="guide-zone">Propuesta según los datos registrados</p><h3 id="estimatedRoutineTitle">RUTINA ESTIMADA</h3></div><span id="estimatedIntensity"></span></div><p id="estimatedRoutineSummary"></p><ul class="estimate-notes" id="estimatedRoutineNotes"></ul><div id="estimatedRoutineList"></div><div class="estimate-actions"><button class="ghost-button" id="loadEstimate" type="button">Cargar para ajustar</button><button class="primary-button" id="approveEstimate" type="button">Aprobar y asignar</button></div><small>Esta propuesta aplica reglas generales y debe ser revisada por el fisioterapeuta. Las restricciones clínicas y la respuesta del paciente tienen prioridad. Referencia general: <a href="https://www.cdc.gov/physical-activity-basics/guidelines/chronic-health-conditions-and-disabilities.html" target="_blank" rel="noopener">CDC, actividad física y condiciones crónicas</a>.</small></section>
+      <section class="assigned-routine-record"><div class="assigned-head"><div><p class="guide-zone">Rutina asignada</p><h3 id="assignedRoutineTitle">Sin rutina asignada</h3></div><a href="#mi-rutina" id="goToRoutineBuilder">Crear o modificar rutina</a></div><div id="assignedRoutineList"></div></section>
+      <div class="latest-control"><div><p class="guide-zone">Último control</p><h3 id="latestControlDate">Sin controles registrados</h3></div><div class="vital-cards" id="latestVitals"></div></div>
+      <details class="new-control" open><summary>＋ Añadir nuevo control</summary>
+        <form id="controlForm"><div class="vitals-grid compact-vitals">
+          <label class="wide"><span>Fecha y hora *</span><input type="datetime-local" name="date" id="newControlDate" required></label>
+          <label><span>Sistólica</span><div class="unit-input"><input type="number" name="systolic" min="40" max="300"><small>mmHg</small></div></label>
+          <label><span>Diastólica</span><div class="unit-input"><input type="number" name="diastolic" min="20" max="200"><small>mmHg</small></div></label>
+          <label><span>Frecuencia cardiaca</span><div class="unit-input"><input type="number" name="heartRate" min="20" max="250"><small>lpm</small></div></label>
+          <label><span>Saturación O₂</span><div class="unit-input"><input type="number" name="spo2" min="50" max="100"><small>%</small></div></label>
+          <label><span>Frecuencia respiratoria</span><div class="unit-input"><input type="number" name="respiratoryRate" min="5" max="80"><small>rpm</small></div></label>
+          <label><span>Temperatura</span><div class="unit-input"><input type="number" name="temperature" min="30" max="45" step="0.1"><small>°C</small></div></label>
+          <label><span>Peso</span><div class="unit-input"><input type="number" name="weight" min="10" max="400" step="0.1"><small>kg</small></div></label>
+          <label><span>Dolor</span><div class="unit-input"><input type="number" name="pain" min="0" max="10"><small>/10</small></div></label>
+          <label class="wide"><span>Observación</span><input type="text" name="notes" placeholder="Estado general o comentario breve"></label>
+        </div><button type="submit" class="primary-button">Guardar control</button></form>
+      </details>
+      <div class="control-history"><div class="history-title"><p class="guide-zone">Historial</p><strong id="controlCount">0 controles</strong></div><div id="controlHistory"></div></div>
+    </article>
+  </div>
+
+  <div class="modal" id="guideModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <button class="modal-backdrop" data-close-guide aria-label="Cerrar"></button>
+    <article class="guide-dialog">
+      <button class="close-button" data-close-guide aria-label="Cerrar guía">×</button>
+      <div class="guide-image"><img id="guideImage" src="" alt=""></div>
+      <div class="guide-content">
+        <p class="guide-zone" id="guideZone"></p><h2 id="guideTitle"></h2>
+        <section><h3>¿EN QUÉ CONSISTE?</h3><p id="guideDescription"></p></section>
+        <section><h3>¿CÓMO SE REALIZA?</h3><ol id="guideSteps"></ol></section>
+        <section class="benefit-block"><h3>¿EN QUÉ AYUDA?</h3><p id="guideBenefit"></p></section>
+        <p class="safety-note"><strong>Entrena con seguridad:</strong> usa una carga que puedas controlar, respira durante el movimiento y detente si sientes dolor.</p>
+        <button class="primary-button full" id="modalAdd" type="button">Añadir a mi rutina</button>
+      </div>
+    </article>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
